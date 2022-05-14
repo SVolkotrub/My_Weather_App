@@ -1,5 +1,5 @@
 
-let apiKey = "a687e5ea475e61b3eb2a5486106b4e28";
+let code = "a687e5ea475e61b3eb2a5486106b4e28";
 let city = "Kyiv";
 let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric`;
 let currentTemperature;
@@ -22,7 +22,7 @@ function showTemperature(response) {
     windElement.innerHTML = wind;
     currentTemperature = temperature;
 }
-axios.get(`${apiUrl}&appid=${apiKey}`).then(showTemperature);
+axios.get(`${apiUrl}&appid=${code}`).then(showTemperature);
 
 
 let currentDate = new Date();
