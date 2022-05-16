@@ -24,26 +24,28 @@
                     <div class="input-group shadow-sm mb-3 bg-body rounded">
                         <input type="text" class="form-control" placeholder="Enter city"
                             id="input-search-city">
-                        <button class="btn btn-outline-secondary" type="submit" >Search</button>
-                        <button class="btn btn-outline-secondary" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill"
+                        <button class="btn btn-outline-secondary" id="search-button" type="submit" >Search</button>
+                        <button class="btn btn-outline-secondary" id="button-location" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill"
                             viewBox="0 0 16 16">
                             <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
-                        </svg>
-                        Current Location</button>
+                        </svg> 
+                        Current Location
+                        
+                     </button> 
                     </div>
                 </form>
             </div>
             
         </div>
-            <div class="card border-0 correctCity">
-            <h3> <span id="city"> Kyiv, Ukraine</span></h3>
-            <!-- <h5> <span id="month">April</span> <span id="date">13</span>, <span id="time">12:52</span> </h5> -->
+            <div class="card border-0 correctCity" name="part with city and time">
+            <h3> <span id="city"> Kyiv</span>, <span id="country">Ukraine</span></h3>
             <h5 id="locale-time">Month day, time</h5>
          </div>
        
     
 
-<div class="card text-center">
+<div class="card text-center" name="center part">
     <div class="card-header">
       <h6> <span class="current-weekDay-0">Monday</span> </h6>
     </div>
