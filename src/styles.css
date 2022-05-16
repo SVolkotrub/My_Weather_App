@@ -83,3 +83,9 @@ a:hover{
 .allUp {
     text-transform: capitalize;
 }
+small{
+    display: block;
+    margin-right: 100px;
+    text-align: right;
+    color: beige;
+}
