@@ -71,29 +71,21 @@ function showCityCountry(response) {
     let countryElement = document.querySelector("#country");
     countryElement.innerHTML = country;
 }
-function formatDate(date) {
-    let currentMonth = date.getMonth();
+function formatDate(timestamp) {
+    let date = new Date(timestamp);
     let hours = date.getHours();
     if (hours < 10) {
     hours = `0${hours}`;}
     let minutes = date.getMinutes();
     if (minutes < 10) {
     minutes = `0${minutes}`;}
-    return ` ${month[currentMonth]} ${date.getDate()}, ${hours}:${minutes}`;
+    let headerDayElement = document.querySelector(".current-weekDay-0");
+    headerDayElement.innerHTML = `${week[date.getDay()]}`;
+    return ` ${month[date.getMonth()]} ${date.getDate()}, ${hours}:${minutes}`;
 }
-
-let currentTimeElement = document.querySelector("#locale-time");
-currentTimeElement.innerHTML = formatDate(currentDate);
 
 // ---end  fill "part with city and time"
 //--- fill "center part"
-function showDay(date) {    
-    let weekday = date.getDay();
-    return `${week[weekday]}`;
-}
-
-let headerDayElement = document.querySelector(".current-weekDay-0");
-headerDayElement.innerHTML = showDay(currentDate);
 
 function showTemperature(response) {
     console.log(response);
@@ -111,9 +103,12 @@ function showTemperature(response) {
     let wind = response.data.wind.speed;
     let windElement = document.querySelector("#wind-current");
     windElement.innerHTML = wind;
-    currentTemperature = temperature;
+    let currentTimeElement = document.querySelector("#locale-time");
+    currentTimeElement.innerHTML = formatDate(response.data.dt*1000);
+   // currentTemperature = temperature; // temporary string, when forecast will be ready - delete it 
+
 }
-axios.get(`${apiUrl}&q=Kyiv&appid=${code}`).then(showTemperature);
+axios.get(`${apiUrl}&q=Kyiv&appid=${code}`).then(showTemperature); // this string fill data for default city = 'Kyiv'
 
 //---end fill "center part"
 
