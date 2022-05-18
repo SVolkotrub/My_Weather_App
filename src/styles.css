@@ -40,6 +40,22 @@ h3, p {
     text-align: left;
     font-size: 58px;
 }
+.temperature .active{
+    color: beige;
+    cursor: default;
+}
+.temperature .active:hover{
+    text-decoration: none;
+}
+a {
+    text-decoration: none;
+    font-weight: 400;
+    color: darkblue;
+}
+
+a:hover {
+    text-decoration: underline;
+}
 .curr-state {
     text-align: left;
     font-size: medium;
@@ -77,14 +93,7 @@ h3, p {
 .units:focus-visible {
     outline: -webkit-focus-ring-color auto 1px;
 }
-a{
-    color: beige;
-    text-decoration: none;
-    font-weight: 400;
-}
-a:hover{
-    text-decoration: underline;
-}
+
 .allUp {
     text-transform: capitalize;
 }
