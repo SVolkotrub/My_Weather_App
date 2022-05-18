@@ -38,23 +38,25 @@ buttonCurrentLocationElement.addEventListener("click", currentLocation);
 
 //-- search
 
-function search(event) {
-    event.preventDefault();
+function search(city) {
     console.log('function search is working');
-    let inputCityElement = document.querySelector("#input-search-city");
-    console.log(inputCityElement);
-    if (inputCityElement.value == false) {
+    if (city == false) {
         alert("Empty city is not valid");
     } else {
-        axios.get(`${apiUrl}&q=${inputCityElement.value}&appid=${code}`).then(showTemperature).catch(function (error) {
+        axios.get(`${apiUrl}&q=${city}&appid=${code}`).then(showTemperature).catch(function (error) {
        alert('Unfortunately, we cannot find such a city in our database, please check the correct city name or try another city');});
-        axios.get(`${apiUrl}&q=${inputCityElement.value}&appid=${code}`).then(showCityCountry).catch(function (error) {
+        axios.get(`${apiUrl}&q=${city}&appid=${code}`).then(showCityCountry).catch(function (error) {
        console.log('Unfortunately, we cannot find such a city in our database, please check the correct city name or try another city'); });
     }
-
+}
+function handleSubmit(event) {
+    event.preventDefault();
+    let inputCityElement = document.querySelector("#input-search-city");
+    console.log(inputCityElement.value);
+    search(inputCityElement.value);
 }
 let buttonSearchElement = document.querySelector("#search-button");
-buttonSearchElement.addEventListener("click", search);
+buttonSearchElement.addEventListener("click", handleSubmit);
 
 //--end search
 
@@ -72,14 +74,18 @@ function showCityCountry(response) {
     countryElement.innerHTML = country;
 }
 function formatDate(timestamp) {
+    console.log('start function formatDate');
     let date = new Date(timestamp);
-    let hours = date.getHours();
-    if (hours < 10) {
-    hours = `0${hours}`;}
-    let minutes = date.getMinutes();
-    if (minutes < 10) {
-    minutes = `0${minutes}`;}
     let headerDayElement = document.querySelector(".current-weekDay-0");
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+
+    if (hours < 10) {
+    hours = `0${hours}`;} 
+    if (minutes < 10) {
+        minutes = `0${minutes}`;
+    }
+    
     headerDayElement.innerHTML = `${week[date.getDay()]}`;
     return ` ${month[date.getMonth()]} ${date.getDate()}, ${hours}:${minutes}`;
 }
@@ -91,25 +97,29 @@ function showTemperature(response) {
     console.log(response);
     let temperature = Math.round(response.data.main.temp);
     let temperatureElement = document.querySelector("#current-temperature");
-    temperatureElement.innerHTML = temperature;
     let descriptionElement = document.querySelector("#temperature-description");
-    descriptionElement.innerHTML = response.data.weather[0].description;
     let temperatureFeelsLike = Math.round(response.data.main.feels_like);
     let temperatureFeelsLikeElement = document.querySelector("#feels-like");
-    temperatureFeelsLikeElement.innerHTML = temperatureFeelsLike;
     let humidity = Math.round(response.data.main.humidity);
     let humidityElement = document.querySelector("#hum-current");
-    humidityElement.innerHTML = humidity;
     let wind = response.data.wind.speed;
     let windElement = document.querySelector("#wind-current");
-    windElement.innerHTML = wind;
     let currentTimeElement = document.querySelector("#locale-time");
-    currentTimeElement.innerHTML = formatDate(response.data.dt*1000);
-   // currentTemperature = temperature; // temporary string, when forecast will be ready - delete it 
+    let timestamp = response.data.dt * 1000;         // response.data.dt * 1000;
+    let iconElement = document.querySelector("#icon-0");
 
+
+    temperatureElement.innerHTML = temperature;
+    descriptionElement.innerHTML = response.data.weather[0].description;
+    temperatureFeelsLikeElement.innerHTML = temperatureFeelsLike;
+    humidityElement.innerHTML = humidity;
+    windElement.innerHTML = wind;
+    currentTimeElement.innerHTML = formatDate(timestamp);
+    console.log(`data ${timestamp}`);
+    iconElement.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
+    iconElement.setAttribute("alt", `${response.data.weather[0].description}`);
+    currentTemperature = temperature;
 }
-axios.get(`${apiUrl}&q=Kyiv&appid=${code}`).then(showTemperature); // this string fill data for default city = 'Kyiv'
-
 //---end fill "center part"
 
 
@@ -142,6 +152,6 @@ linkCelsiusElement.addEventListener("click", convertToCelsius);
 linkFahrElement.addEventListener("click", convertToFahrenheit);
 
 //---end block CONVERT temperature
-
+ search("Kyiv"); // this string fill data for default city = 'Kyiv'
 
 
