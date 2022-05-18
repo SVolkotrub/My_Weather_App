@@ -1,7 +1,5 @@
 
 let code = "a687e5ea475e61b3eb2a5486106b4e28";
-let city ; //city by default= "Kyiv"
-let country; //country by default  = "Ukraine"
 let apiUrl = `https://api.openweathermap.org/data/2.5/weather?units=metric`;
 let currentTemperature;
 let currentDate = new Date();
@@ -45,8 +43,7 @@ function search(city) {
     } else {
         axios.get(`${apiUrl}&q=${city}&appid=${code}`).then(showTemperature).catch(function (error) {
        alert('Unfortunately, we cannot find such a city in our database, please check the correct city name or try another city');});
-        axios.get(`${apiUrl}&q=${city}&appid=${code}`).then(showCityCountry).catch(function (error) {
-       console.log('Unfortunately, we cannot find such a city in our database, please check the correct city name or try another city'); });
+        
     }
 }
 function handleSubmit(event) {
@@ -62,17 +59,7 @@ buttonSearchElement.addEventListener("click", handleSubmit);
 
 
 // --- fill "part with city and time"
-function showCityCountry(response) {
-    console.log('started function showCityCountry');
-    console.log(response);
-    city = response.data.name;
-    console.log(city);
-    let cityElement = document.querySelector("#city");
-    cityElement.innerHTML = city;
-    country = response.data.sys.country;
-    let countryElement = document.querySelector("#country");
-    countryElement.innerHTML = country;
-}
+
 function formatDate(timestamp) {
     console.log('start function formatDate');
     let date = new Date(timestamp);
@@ -107,8 +94,14 @@ function showTemperature(response) {
     let currentTimeElement = document.querySelector("#locale-time");
     let timestamp = response.data.dt * 1000;         // response.data.dt * 1000;
     let iconElement = document.querySelector("#icon-0");
-
-
+    let city = response.data.name;
+    console.log(city);
+    let cityElement = document.querySelector("#city");
+    let country = response.data.sys.country;
+    let countryElement = document.querySelector("#country");
+    
+    cityElement.innerHTML = city;
+    countryElement.innerHTML = country;
     temperatureElement.innerHTML = temperature;
     descriptionElement.innerHTML = response.data.weather[0].description;
     temperatureFeelsLikeElement.innerHTML = temperatureFeelsLike;
@@ -119,7 +112,7 @@ function showTemperature(response) {
     iconElement.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
     iconElement.setAttribute("alt", `${response.data.weather[0].description}`);
     currentTemperature = temperature;
-    
+
     linkCelsiusElement.classList.add("active");
     linkFahrElement.classList.remove("active");
 }
