@@ -44,9 +44,14 @@ h3, p {
     text-align: left;
     font-size: medium;
 }
+.image{
+    text-align: right;
+}
 .weather-image-main{
-    width: 100%;
-    padding: 20px;
+    width: 50%;
+    padding: 10px;
+    margin-left: 10px auto;
+    text-align: right;
 }
 .forecast {
     width: 100%;
