@@ -17,7 +17,6 @@ function showPosition(position) {
     apiUrl = apiUrl + `&lat=${latitude}&lon=${longitude}`;
     console.log(apiUrl);
     axios.get(`${apiUrl}&appid=${code}`).then(showTemperature);
-    axios.get(`${apiUrl}&appid=${code}`).then(showCityCountry);
 }
 
 function error(err) {
