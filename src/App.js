@@ -137,12 +137,16 @@ editDayForecast(currentDate);
 function convertToFahrenheit(event) {
     event.preventDefault();
     let currentTempElement = document.querySelector("#current-temperature"); 
+    linkCelsiusElement.classList.remove("active");
+    linkFahrElement.classList.add("active");
     let tempToFahr = Math.round((currentTemperature * 9) / 5 + 32);
     currentTempElement.innerHTML = `${tempToFahr}`;
     
 }
 function convertToCelsius(event) {
     event.preventDefault();
+    linkCelsiusElement.classList.add("active");
+    linkFahrElement.classList.remove("active");
     let currentTempElement = document.querySelector("#current-temperature");
     currentTempElement.innerHTML = currentTemperature; 
 }
