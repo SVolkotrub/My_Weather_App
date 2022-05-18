@@ -5,7 +5,7 @@ let currentTemperature;
 let currentDate = new Date();
 
 const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const weekForecast = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat","Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
 const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 // -- current-location
@@ -115,8 +115,72 @@ function showTemperature(response) {
 
     linkCelsiusElement.classList.add("active");
     linkFahrElement.classList.remove("active");
+
+    getForecast(response.data.coord);
 }
 //---end fill "center part"
+//-- forecast
+
+function getForecast(coordinates) {
+    console.log(coordinates);
+    let apiUrlForecast = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&units=metric&appid=${code}`;
+    console.log(apiUrlForecast);
+    axios.get(apiUrlForecast).then(displayForecast);
+}
+function formatForecastDay(timestamp) {
+    let date = new Date(timestamp * 1000);
+    let day = date.getDay();
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    return days[day];
+}
+function formatForecastMonth(timestamp) {
+    let date = new Date(timestamp * 1000);
+    let monthForecast = date.getMonth();
+    return month[monthForecast];
+}
+function formatForecastDate(timestamp) {
+    let date = new Date(timestamp * 1000);
+    return date.getDate();
+}
+function displayForecast(response) {
+    const forecast = response.data.daily;
+    forecast.length = 5;
+    console.log(forecast);
+    let forecastElement = document.querySelector("#forecast");
+
+    let forecastHTML = `<div class="card-group forecast border-0">`;
+    forecast.forEach(function (forecastDay) {
+        forecastHTML += `<div class="col col-forecast">
+       
+            <div class="card border border-light mb-1 body rounded-3 shadow-lg" style="max-width: 10rem;">
+                <div class="card-header text-center bg-transparent border-light">
+                    <h5 class="day-forecast">${formatForecastDay(forecastDay.dt)}</h5>
+                    <span id="day-forecast-day0-date">${formatForecastDate(forecastDay.dt)}</span>
+                    <br>
+                    <span class="month-forecast">${formatForecastMonth(forecastDay.dt)}</span>
+                    
+
+                </div>
+
+                      <div class="text-center" >
+                        <img src="http://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png" alt="Weather image" width ="42" />
+                      </div>
+
+                <div class="card-footer text-center bg-transparent border-light">
+                   <span class="weather-forecast-temperature-max">${Math.round(forecastDay.temp.max)}°</span> 
+                   <br>
+                    <span class="weather-forecast-temperature-min">${Math.round(forecastDay.temp.min)}°</span>
+                </div>
+             </div>
+        </div>`;
+
+    })
+
+    forecastHTML += `</div>`;
+    forecastElement.innerHTML = forecastHTML;
+}
+
+
 
 
 function editDayForecast(date) {
