@@ -181,17 +181,8 @@ function displayForecast(response) {
 }
 
 
+//-- end forecast
 
-
-function editDayForecast(date) {
-    let i = date.getDay();
-    let daysForecastElement = document.querySelectorAll(".day-forecast");
-    for (let a = 0; a < daysForecastElement.length; a += 1){
-        daysForecastElement[a].innerHTML = `${weekForecast[a + i]}`;
-    }
-
-}
-editDayForecast(currentDate);
 
 //--- block CONVERT temperature
 function convertToFahrenheit(event) {
