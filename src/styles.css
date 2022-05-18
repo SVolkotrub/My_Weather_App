@@ -19,7 +19,10 @@ border: 0;
 .card, .card-body {
     background-color: rgba(50, 85, 122, 0.2);
     padding: 5px;
-    margin-right: 20px;
+    margin-right: 10px;
+}
+.card-header{
+    padding: 2px;
 }
 .card-group{
     margin: 5px;
@@ -102,4 +105,7 @@ small{
     margin-right: 100px;
     text-align: right;
     color: beige;
+}
+.weather-forecast-temperature-max{
+    font-weight: bold;
 }
